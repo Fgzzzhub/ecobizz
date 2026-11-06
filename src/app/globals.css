@@ -1,0 +1,756 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   3-LAYER THEME ARCHITECTURE
+   Layer 1 (Default): "Zamrud & Krem" (#FFF3D5, #013E37, #4D694E, #FFEFB3)
+   Layer 2 (Dark)   : "Gelap Obsidian" (#0F0F0F, #C7FF2E, #2E2E2E, #808080)
+   Layer 3 (Light)  : "Terang Bersih"  (#F5F5F7, #FFFFFF, #C7FF2E, #0F0F0F)
+   ========================================================================== */
+
+:root,
+[data-theme="emerald"] {
+  --font-serif: 'Manjari', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+
+  /* Apple Spring Easing Curves */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-ios: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* User Custom Palette Tokens */
+  --butter-gold: #FFEFB3;
+  --deep-emerald: #013E37;
+  --sage-green: #4D694E;
+  --warm-cream: #FFF3D5;
+
+  /* Layer 1 (Default): Zamrud & Krem Semantic Tokens */
+  --bg-paper: #FFF3D5;
+  --bg-paper-card: #FFFDF7;
+  --bg-paper-subtle: #F4E4BE;
+  --surface-light: #FFFDF7;
+  --surface-pill: #F4E4BE;
+  --ink: #013E37;
+  --ink-dark: #013E37;
+  --ink-muted: #4D694E;
+  --leaf: #013E37;
+  --turmeric: #FFEFB3;
+  --terracotta: #C84B31;
+  --line: rgba(77, 105, 78, 0.2);
+  --line-hover: rgba(1, 62, 55, 0.42);
+  --accent-bg: #FFEFB3;
+  --accent-ink: #013E37;
+  --hero-surface: #013E37;
+  --hero-ink: #FFF3D5;
+}
+
+[data-theme="dark"] {
+  --bg-paper: #0F0F0F;
+  --bg-paper-card: #18181A;
+  --bg-paper-subtle: #262629;
+  --surface-light: #FFFFFF;
+  --surface-pill: #262629;
+  --ink: #FFFFFF;
+  --ink-dark: #0F0F0F;
+  --ink-muted: #8E8E93;
+  --leaf: #C7FF2E;
+  --turmeric: #C7FF2E;
+  --terracotta: #FF5A36;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-hover: rgba(199, 255, 46, 0.35);
+  --accent-bg: #C7FF2E;
+  --accent-ink: #0F0F0F;
+  --hero-surface: #121214;
+  --hero-ink: #FFFFFF;
+}
+
+[data-theme="light"] {
+  --bg-paper: #F5F5F7;
+  --bg-paper-card: #FFFFFF;
+  --bg-paper-subtle: #EEEEF0;
+  --surface-light: #FFFFFF;
+  --surface-pill: #EEEEF0;
+  --ink: #0F0F0F;
+  --ink-dark: #0F0F0F;
+  --ink-muted: #6E6E73;
+  --leaf: #C7FF2E;
+  --turmeric: #C7FF2E;
+  --terracotta: #E54826;
+  --line: rgba(15, 15, 15, 0.08);
+  --line-hover: rgba(15, 15, 15, 0.22);
+  --accent-bg: #C7FF2E;
+  --accent-ink: #0F0F0F;
+  --hero-surface: #121214;
+  --hero-ink: #FFFFFF;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-paper);
+  color: var(--ink);
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, sans-serif;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  min-height: 100dvh;
+  letter-spacing: -0.014em;
+  line-height: 1.5;
+  overflow-x: hidden;
+  transition: background-color 0.35s var(--ease-ios), color 0.35s var(--ease-ios);
+}
+
+/* Manjari Display Typography — Airy Geometric Regular (400) */
+.font-serif,
+.font-display {
+  font-family: var(--font-serif), sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.14;
+}
+
+/* Inter UI Typography */
+.font-sans {
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, sans-serif;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+/* Tabular Numbers */
+.font-mono {
+  font-family: var(--font-mono), monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* ==========================================================================
+   APPLE-GRADE BENTO CARDS & FLUID INTERACTIVE SURFACES
+   ========================================================================== */
+
+/* Standard Bento Card */
+.nota-card,
+.nota-folio-sheet {
+  background-color: var(--bg-paper-card);
+  border: 1px solid var(--line);
+  border-radius: 30px;
+  position: relative;
+  box-shadow:
+    0 12px 32px -16px rgba(1, 62, 55, 0.12),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.65);
+  transition:
+    transform 0.38s var(--ease-spring),
+    border-color 0.28s var(--ease-ios),
+    box-shadow 0.38s var(--ease-spring),
+    background-color 0.3s var(--ease-ios);
+}
+
+[data-theme="dark"] .nota-card,
+[data-theme="dark"] .nota-folio-sheet {
+  box-shadow:
+    0 10px 30px -15px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+}
+
+.nota-card-interactive:hover {
+  transform: translateY(-3px);
+  border-color: var(--line-hover);
+  box-shadow:
+    0 18px 38px -16px rgba(1, 62, 55, 0.18),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="dark"] .nota-card-interactive:hover {
+  box-shadow:
+    0 18px 38px -16px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Highlight Accent Bento Card (#FFEFB3 in Default Emerald, #C7FF2E in Dark/Light) */
+.bento-lime {
+  background-color: var(--accent-bg);
+  color: var(--accent-ink);
+  border: 1px solid rgba(1, 62, 55, 0.16);
+  border-radius: 30px;
+  position: relative;
+  box-shadow:
+    0 14px 34px -12px rgba(1, 62, 55, 0.14),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.7);
+  transition:
+    transform 0.38s var(--ease-spring),
+    box-shadow 0.38s var(--ease-spring),
+    filter 0.25s var(--ease-ios);
+}
+
+[data-theme="dark"] .bento-lime,
+[data-theme="light"] .bento-lime {
+  border-color: transparent;
+  box-shadow:
+    0 14px 34px -12px rgba(199, 255, 46, 0.22),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.45);
+}
+
+.bento-lime-interactive:hover {
+  transform: translateY(-3px) scale(1.005);
+  box-shadow:
+    0 20px 42px -12px rgba(1, 62, 55, 0.22),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.85);
+}
+
+[data-theme="dark"] .bento-lime-interactive:hover,
+[data-theme="light"] .bento-lime-interactive:hover {
+  box-shadow:
+    0 20px 42px -12px rgba(199, 255, 46, 0.32),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.6);
+}
+
+/* Pure White / Warm Cream Contrast Bento Card */
+.bento-white {
+  background-color: var(--surface-light);
+  color: var(--ink-dark);
+  border-radius: 30px;
+  position: relative;
+  box-shadow: 0 12px 32px -12px rgba(1, 62, 55, 0.15);
+  transition: transform 0.38s var(--ease-spring);
+}
+
+/* Deep Emerald (#013E37) or Deep Obsidian (#121214) Map/Grid Canvas Card */
+.bento-grid-canvas {
+  background-color: var(--hero-surface);
+  color: var(--hero-ink);
+  border: 1px solid rgba(77, 105, 78, 0.35);
+  border-radius: 32px;
+  background-image:
+    radial-gradient(circle at 75% 30%, rgba(255, 239, 179, 0.14), transparent 48%),
+    linear-gradient(to right, rgba(255, 243, 213, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 243, 213, 0.06) 1px, transparent 1px);
+  background-size: 100% 100%, 24px 24px, 24px 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 20px 42px -15px rgba(1, 62, 55, 0.42),
+    inset 0 1px 0 0 rgba(255, 239, 179, 0.15);
+}
+
+[data-theme="dark"] .bento-grid-canvas,
+[data-theme="light"] .bento-grid-canvas {
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background-image:
+    radial-gradient(circle at 75% 30%, rgba(199, 255, 46, 0.08), transparent 48%),
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  box-shadow:
+    0 18px 40px -15px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.07);
+}
+
+/* Subtle horizontal divider inside Bento Cards */
+.nota-ReceiptDivider {
+  border-bottom: 1px solid var(--line);
+}
+
+.bento-lime .nota-ReceiptDivider {
+  border-bottom: 1px solid rgba(1, 62, 55, 0.14);
+}
+
+/* Pill Tag inside Bento Cards */
+.bento-pill-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border-radius: 9999px;
+  padding: 0.375rem 0.875rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background-color: var(--bg-paper-subtle);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  transition:
+    transform 0.22s var(--ease-spring),
+    background-color 0.2s var(--ease-ios),
+    color 0.2s var(--ease-ios);
+}
+
+.bento-lime .bento-pill-tag {
+  background-color: rgba(1, 62, 55, 0.1);
+  color: var(--accent-ink);
+  border: 1px solid rgba(1, 62, 55, 0.12);
+}
+
+/* Full-width Accent Pill CTA with Deep Emerald / Black Circular Arrow */
+.pill-cta-lime {
+  background-color: var(--accent-bg);
+  color: var(--accent-ink);
+  border: 1.5px solid rgba(1, 62, 55, 0.18);
+  border-radius: 9999px;
+  box-shadow: 0 12px 28px -10px rgba(1, 62, 55, 0.18);
+  transition:
+    transform 0.32s var(--ease-spring),
+    box-shadow 0.32s var(--ease-spring),
+    filter 0.2s var(--ease-ios);
+}
+
+[data-theme="dark"] .pill-cta-lime,
+[data-theme="light"] .pill-cta-lime {
+  border-color: transparent;
+  box-shadow: 0 10px 28px -8px rgba(199, 255, 46, 0.28);
+}
+
+.pill-cta-lime:hover {
+  transform: translateY(-2px) scale(1.008);
+  box-shadow: 0 16px 34px -8px rgba(1, 62, 55, 0.25);
+  filter: brightness(1.02);
+}
+
+.pill-cta-lime:active {
+  transform: scale(0.98);
+}
+
+.pill-cta-lime:hover .cta-arrow-circle {
+  transform: translateX(3px) scale(1.06);
+}
+
+.cta-arrow-circle {
+  transition: transform 0.32s var(--ease-bounce);
+}
+
+/* Clean Tactile Pill Buttons */
+.nota-btn-leaf,
+.apple-press {
+  transition:
+    transform 0.26s var(--ease-spring),
+    opacity 0.2s var(--ease-ios),
+    background-color 0.2s var(--ease-ios);
+}
+
+.nota-btn-leaf {
+  background-color: var(--accent-bg);
+  color: var(--accent-ink);
+  border-radius: 9999px;
+  font-weight: 600;
+}
+
+.nota-btn-leaf:hover {
+  transform: translateY(-1px);
+  opacity: 0.95;
+}
+
+.nota-btn-leaf:active,
+.apple-press:active {
+  transform: scale(0.96);
+}
+
+.nota-btn-ink {
+  background-color: var(--ink);
+  color: var(--bg-paper);
+  border-radius: 9999px;
+  font-weight: 600;
+  transition: transform 0.26s var(--ease-spring), opacity 0.2s var(--ease-ios);
+}
+
+/* Apple-style Rounded Input */
+.nota-input-line {
+  background-color: var(--bg-paper-subtle);
+  color: var(--ink);
+  border: 1.5px solid rgba(77, 105, 78, 0.2);
+  border-radius: 18px;
+  transition:
+    border-color 0.22s var(--ease-ios),
+    background-color 0.22s var(--ease-ios),
+    box-shadow 0.22s var(--ease-ios);
+}
+
+[data-theme="dark"] .nota-input-line,
+[data-theme="light"] .nota-input-line {
+  border-color: transparent;
+}
+
+.nota-input-line:focus {
+  outline: none;
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px rgba(1, 62, 55, 0.14);
+}
+
+[data-theme="dark"] .nota-input-line:focus,
+[data-theme="light"] .nota-input-line:focus {
+  border-color: #C7FF2E;
+  box-shadow: 0 0 0 3px rgba(199, 255, 46, 0.16);
+}
+
+/* Clean Apple list row */
+.nota-leader-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.45rem 0;
+}
+
+.nota-leader-dots {
+  flex: 1;
+  height: 1px;
+  background-color: var(--line);
+  margin: 0 10px;
+}
+
+/* Graph canvas (#013E37 Deep Emerald in Default, #121214 in Dark/Light) */
+.nota-graph-paper {
+  background-color: var(--hero-surface);
+  background-image:
+    radial-gradient(circle at 80% 25%, rgba(255, 239, 179, 0.12), transparent 50%),
+    linear-gradient(to right, rgba(255, 243, 213, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 243, 213, 0.06) 1px, transparent 1px);
+  background-size: 100% 100%, 24px 24px, 24px 24px;
+  border-radius: 24px;
+  border: 1px solid rgba(77, 105, 78, 0.35);
+}
+
+[data-theme="dark"] .nota-graph-paper,
+[data-theme="light"] .nota-graph-paper {
+  background-image:
+    radial-gradient(circle at 80% 25%, rgba(199, 255, 46, 0.06), transparent 50%),
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ==========================================================================
+   LAYER 1 (DEFAULT "ZAMRUD & KREM") AUTOMATIC UTILITY HARMONIZATION
+   Maps hardcoded #C7FF2E / #0F0F0F / #808080 / #141416 classes seamlessly
+   to #FFEFB3, #013E37, #4D694E, and #FFF3D5 when in Default Emerald theme!
+   ========================================================================== */
+
+:root:not([data-theme="dark"]):not([data-theme="light"]) {
+  /* Accent backgrounds (#C7FF2E -> #FFEFB3 with Deep Emerald #013E37 text & subtle border) */
+  .bg-\[\#C7FF2E\] {
+    background-color: #FFEFB3 !important;
+    color: #013E37 !important;
+    border: 1px solid rgba(1, 62, 55, 0.18);
+  }
+
+  .bg-\[\#C7FF2E\]\/10,
+  .bg-\[\#C7FF2E\]\/15 {
+    background-color: rgba(255, 239, 179, 0.65) !important;
+  }
+
+  .border-\[\#C7FF2E\]\/30,
+  .border-\[\#C7FF2E\]\/40 {
+    border-color: rgba(1, 62, 55, 0.25) !important;
+  }
+
+  /* Deep surfaces (#0F0F0F, #141416, #121214 -> #013E37 Deep Forest Emerald) */
+  .bg-\[\#0F0F0F\],
+  .bg-\[\#141416\],
+  .bg-\[\#121214\] {
+    background-color: #013E37 !important;
+    color: #FFF3D5 !important;
+  }
+
+  /* Subtle dark pill buttons inside deep emerald cards (#222226 -> #4D694E sage) */
+  .bg-\[\#222226\] {
+    background-color: rgba(77, 105, 78, 0.45) !important;
+    color: #FFF3D5 !important;
+    border-color: rgba(255, 239, 179, 0.2) !important;
+  }
+
+  .hover\:bg-\[\#C7FF2E\]:hover {
+    background-color: #FFEFB3 !important;
+    color: #013E37 !important;
+  }
+
+  .hover\:bg-\[\#383838\]:hover,
+  .hover\:bg-\[\#343438\]:hover {
+    background-color: #E8D5A7 !important;
+    color: #013E37 !important;
+  }
+
+  /* Primary dark text (#0F0F0F -> #013E37 Deep Forest Emerald) */
+  .text-\[\#0F0F0F\] {
+    color: #013E37 !important;
+  }
+
+  .text-\[\#0F0F0F\]\/75,
+  .text-\[\#0F0F0F\]\/80,
+  .text-\[\#0F0F0F\]\/70 {
+    color: #4D694E !important;
+  }
+
+  /* Secondary / Muted text (#808080, #8E8E93 -> #4D694E Sage Botanical Green) */
+  .text-\[\#808080\],
+  .text-\[\#8E8E93\] {
+    color: #4D694E !important;
+  }
+
+  /* Inside dark emerald cards, keep muted text soft cream/sage so it's readable */
+  .bento-grid-canvas .text-\[\#8E8E93\],
+  .bento-grid-canvas .text-\[\#808080\],
+  .bg-\[\#141416\] .text-\[\#8E8E93\],
+  .bg-\[\#141416\] .text-\[\#808080\],
+  .bg-\[\#0F0F0F\] .text-\[\#808080\] {
+    color: rgba(255, 243, 213, 0.78) !important;
+  }
+
+  /* Accent text: on light cream cards use Deep Emerald #013E37; on dark emerald cards use Warm Butter #FFEFB3 */
+  .text-\[\#C7FF2E\] {
+    color: #013E37 !important;
+    font-weight: 600;
+  }
+
+  .bento-grid-canvas .text-\[\#C7FF2E\],
+  .nota-graph-paper .text-\[\#C7FF2E\],
+  .bg-\[\#141416\] .text-\[\#C7FF2E\],
+  .bg-\[\#0F0F0F\] .text-\[\#C7FF2E\] {
+    color: #FFEFB3 !important;
+  }
+
+  .fill-\[\#C7FF2E\] {
+    fill: #FFEFB3 !important;
+  }
+
+  .fill-\[\#0F0F0F\] {
+    fill: #013E37 !important;
+  }
+
+  /* Borders (#2E2E2E -> #4D694E subtle sage border) */
+  .border-\[\#2E2E2E\] {
+    border-color: rgba(77, 105, 78, 0.25) !important;
+  }
+
+  /* SVG Route & Chart Colors inside Deep Emerald surfaces */
+  .bento-grid-canvas svg [stroke="#C7FF2E"],
+  .nota-graph-paper svg [stroke="#C7FF2E"] {
+    stroke: #FFEFB3 !important;
+  }
+
+  .bento-grid-canvas svg [fill="#C7FF2E"],
+  .nota-graph-paper svg [fill="#C7FF2E"] {
+    fill: #FFEFB3 !important;
+  }
+
+  .bento-grid-canvas svg [fill="#0F0F0F"],
+  .nota-graph-paper svg [stroke="#0F0F0F"] {
+    fill: #013E37 !important;
+    stroke: #013E37 !important;
+  }
+
+  .nota-graph-paper svg [fill="#808080"] {
+    fill: rgba(255, 243, 213, 0.72) !important;
+  }
+
+  .nota-graph-paper svg [stroke="#808080"] {
+    stroke: rgba(255, 243, 213, 0.45) !important;
+  }
+
+  /* Inline Sparklines on light cards use #4D694E sage stroke and #013E37 dot */
+  .nota-card:not(.bento-grid-canvas) svg [stroke="#C7FF2E"] {
+    stroke: #4D694E !important;
+  }
+
+  .nota-card:not(.bento-grid-canvas) svg [fill="#C7FF2E"] {
+    fill: #013E37 !important;
+  }
+}
+
+/* Floating Bottom Dock Theme Styling */
+.apple-bottom-dock {
+  background-color: rgba(1, 62, 55, 0.94);
+  border: 1px solid rgba(77, 105, 78, 0.45);
+  box-shadow: 0 20px 50px rgba(1, 62, 55, 0.35);
+}
+
+[data-theme="dark"] .apple-bottom-dock,
+[data-theme="light"] .apple-bottom-dock {
+  background-color: color-mix(in srgb, var(--bg-paper-card) 90%, transparent);
+  border: 1px solid var(--line);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.apple-dock-btn-active {
+  background-color: #FFEFB3;
+  color: #013E37;
+  box-shadow: 0 8px 20px rgba(255, 239, 179, 0.25);
+}
+
+[data-theme="dark"] .apple-dock-btn-active,
+[data-theme="light"] .apple-dock-btn-active {
+  background-color: #C7FF2E;
+  color: #0F0F0F;
+  box-shadow: 0 8px 20px rgba(199, 255, 46, 0.25);
+}
+
+.apple-dock-btn-inactive {
+  background-color: rgba(77, 105, 78, 0.38);
+  color: #FFF3D5;
+}
+
+.apple-dock-btn-inactive:hover {
+  background-color: rgba(77, 105, 78, 0.6);
+}
+
+[data-theme="dark"] .apple-dock-btn-inactive,
+[data-theme="light"] .apple-dock-btn-inactive {
+  background-color: var(--bg-paper-subtle);
+  color: var(--ink);
+}
+
+/* ==========================================================================
+   APPLE MOTION & SPRING KEYFRAMES
+   ========================================================================== */
+
+@keyframes appleFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.985);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes appleScaleIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.93) translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes dynamicIslandDrop {
+  0% {
+    opacity: 0;
+    transform: translateY(-18px) scale(0.85);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes pinFloat {
+  0%,
+  100% {
+    transform: translate(292px, 26px) translateY(0px);
+  }
+  50% {
+    transform: translate(292px, 26px) translateY(-4px);
+  }
+}
+
+@keyframes routeDraw {
+  0% {
+    stroke-dashoffset: 320;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes stampDrop {
+  0% {
+    opacity: 0;
+    transform: scale(0.94) translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes micPulseRing {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.75;
+  }
+  70% {
+    transform: scale(1.36);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.42);
+    opacity: 0;
+  }
+}
+
+.apple-view-enter {
+  animation: appleFadeUp 0.48s var(--ease-spring) both;
+}
+
+.apple-stagger-1 {
+  animation: appleFadeUp 0.46s var(--ease-spring) 0.04s both;
+}
+.apple-stagger-2 {
+  animation: appleFadeUp 0.46s var(--ease-spring) 0.09s both;
+}
+.apple-stagger-3 {
+  animation: appleFadeUp 0.46s var(--ease-spring) 0.14s both;
+}
+.apple-stagger-4 {
+  animation: appleFadeUp 0.46s var(--ease-spring) 0.19s both;
+}
+.apple-stagger-5 {
+  animation: appleFadeUp 0.46s var(--ease-spring) 0.24s both;
+}
+
+.apple-scale-in {
+  animation: appleScaleIn 0.38s var(--ease-spring) both;
+}
+
+.dynamic-island-toast {
+  animation: dynamicIslandDrop 0.42s var(--ease-bounce) both;
+}
+
+.route-path-anim {
+  stroke-dasharray: 320;
+  animation: routeDraw 0.9s var(--ease-spring) forwards;
+}
+
+.pin-float-anim {
+  animation: pinFloat 3.2s ease-in-out infinite;
+}
+
+.stamp-drop-anim {
+  animation: stampDrop 0.45s var(--ease-spring) both;
+}
+
+.mic-pulse-ring {
+  animation: micPulseRing 1.4s infinite ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .apple-view-enter,
+  .apple-stagger-1,
+  .apple-stagger-2,
+  .apple-stagger-3,
+  .apple-stagger-4,
+  .apple-stagger-5,
+  .apple-scale-in,
+  .dynamic-island-toast,
+  .route-path-anim,
+  .pin-float-anim,
+  .stamp-drop-anim,
+  .mic-pulse-ring {
+    animation: none !important;
+  }
+}
+
+@media print {
+  body {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .nota-card,
+  .nota-folio-sheet,
+  .bento-lime {
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+  }
+}
